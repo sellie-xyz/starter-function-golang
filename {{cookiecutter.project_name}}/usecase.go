@@ -1,8 +1,8 @@
-package __cookiecutter_project_name__
+package {{cookiecutter.module}}
 
 import (
 	"context"
-	"create-payment-method/utils"
+    "{{cookiecutter.module}}/utils"
 	"fmt"
 	"github.com/pkg/errors"
 	log "github.com/sirupsen/logrus"

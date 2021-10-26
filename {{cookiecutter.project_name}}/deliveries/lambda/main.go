@@ -11,14 +11,14 @@ import (
 )
 
 type handler struct {
-	usecase __cookiecutter_project_name__.ObjectService
+	usecase "{{cookiecutter.module}}".ObjectService
 }
 
 func (h *handler) Create(ctx context.Context, body []byte) (helpers.Response, error) {
 
 	log.Info("request received")
 
-	createPaymentMethod := &__cookiecutter_project_name__.CreateObject{}
+	createPaymentMethod := &"{{cookiecutter.module}}".CreateObject{}
 	if err := json.Unmarshal(body, &createPaymentMethod); err != nil {
 		log.Info("invalid body received")
 		return helpers.Fail(err, http.StatusBadRequest)
@@ -33,7 +33,7 @@ func (h *handler) Create(ctx context.Context, body []byte) (helpers.Response, er
 }
 
 func main() {
-	usecase, err := __cookiecutter_project_name__.Init(false)
+	usecase, err := "{{cookiecutter.module}}".Init(false)
 	if err != nil {
 		log.Error(err)
 	}

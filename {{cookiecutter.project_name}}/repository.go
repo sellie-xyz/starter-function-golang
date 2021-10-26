@@ -1,4 +1,4 @@
-package __cookiecutter_project_name__
+package {{cookiecutter.module}}
 
 import (
 	"context"

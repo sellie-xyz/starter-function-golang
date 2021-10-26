@@ -2,7 +2,7 @@ package http
 
 import (
 	"context"
-	starter_function "{{cookiecutter.module}}"
+	"{{cookiecutter.module}}"
 	"encoding/json"
 	"github.com/gorilla/mux"
 	log "github.com/sirupsen/logrus"
@@ -13,7 +13,7 @@ import (
 const fiveSecondsTimeout = time.Second * 5
 
 type delivery struct {
-	usecase starter_function.ObjectService
+	usecase "{{cookiecutter.module}}".ObjectService
 }
 
 func writeErr(w http.ResponseWriter, err error) {
@@ -26,7 +26,7 @@ func (d *delivery) Create(w http.ResponseWriter, r *http.Request) {
 	defer cancel()
 
 	decoder := json.NewDecoder(r.Body)
-	createObject := &starter_function.CreateObject{}
+	createObject := &"{{cookiecutter.module}}".CreateObject{}
 	if err := decoder.Decode(&createObject); err != nil {
 		writeErr(w, err)
 		return
@@ -52,7 +52,7 @@ func Routes() (*mux.Router, error) {
 	delivery := &delivery{usecase}
 
 	r := mux.NewRouter()
-	r.HandleFunc("/payment-methods", delivery.Create).Methods("POST")
+	r.HandleFunc("/\"{{cookiecutter.module}}\"", delivery.Create).Methods("POST")
 
 	return r, nil
 }

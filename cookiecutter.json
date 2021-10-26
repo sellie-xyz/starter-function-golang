@@ -3,6 +3,7 @@
   "runtime": "go1.x",
   "main_table": "Name of the DynamoDB table",
   "resource": "Name of the API resource",
+  "module": "Name of the module",
   "architectures": {
     "value": []
   }

@@ -1,0 +1,40 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  {{ cookiecutter.project_name }}
+  SAM Template for {{ cookiecutter.project_name }}
+
+Resources:
+  selliedb:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: {{cookiecutter.main_table}}
+      PrimaryKey:
+        Name: pk
+        Type: String
+  CreatePaymentMethodFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: deliveries/lambda/
+      Handler: main
+      Runtime: go1.x
+      Architectures:
+        - x86_64
+      Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
+      Events:
+        CatchAll:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /{{cookiecutter.resource}}
+            Method: POST
+      Policies:
+        DynamoDBWritePolicy:
+          TableName: !Ref selliedb
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          TABLE_NAME: {{ cookiecutter.main_table }}
+
+Outputs:
+  CreatePaymentMethodFunctionAPI:
+    Description: "API Gateway Enpoint"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/payment-methods/"

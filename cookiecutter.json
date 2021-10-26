@@ -1,7 +1,8 @@
 {
   "project_name": "Name of the project",
   "runtime": "go1.x",
-  "main_table": "payments",
+  "main_table": "Name of the DynamoDB table",
+  "resource": "Name of the API resource",
   "architectures": {
     "value": []
   }
